@@ -71,3 +71,67 @@ export default defineConfig([
   },
 ])
 ```
+📂 Cấu trúc Dự án: nextsoft-ecosystem
+Tổng quan về các thư mục và tập tin quan trọng trong dự án React + Vite + TypeScript.
+
+1. Cấu hình & Môi trường (Root)
+Các file nằm ngay thư mục gốc, dùng để thiết lập môi trường phát triển.
+
+📄 .env: Chứa biến môi trường (API Key, Supabase URL).
+
+📄 tailwind.config.js: Cấu hình màu sắc thương hiệu (corporate, product) và font chữ.
+
+📄 postcss.config.js: Plugin hỗ trợ Tailwind CSS.
+
+📄 package.json: Quản lý thư viện (React, Lucide, Router...) và các lệnh chạy (dev, build).
+
+📄 vite.config.ts: Cấu hình Bundler Vite.
+
+📄 tsconfig.json: Cấu hình TypeScript.
+
+📄 index.html: File HTML chính chứa thẻ root.
+
+2. Mã Nguồn (src/)
+Nơi chứa toàn bộ logic và giao diện của ứng dụng.
+
+🧱 Cốt lõi (Core)
+📄 main.tsx: Điểm khởi chạy ứng dụng, bao bọc AppProvider.
+
+📄 App.tsx: Quản lý định tuyến (Routing) giữa các trang.
+
+📄 index.css: Import Tailwind CSS (@tailwind base, etc.).
+
+📄 supabaseClient.ts: Khởi tạo kết nối đến Supabase.
+
+📄 vite-env.d.ts: Định nghĩa kiểu cho Vite.
+
+🧠 Quản lý Dữ liệu (src/context/ & src/types/)
+📂 context/
+
+📄 AppContext.tsx: "Bộ não" quản lý trạng thái toàn cục (Leads, Articles) và hàm xử lý logic (addLead).
+
+📂 types/
+
+📄 index.ts: Định nghĩa các Interface TypeScript dùng chung (Lead, Article, LeadSource...).
+
+🎨 Giao diện (src/pages/)
+📂 corporate/ (Web Công ty mẹ)
+
+📄 CorporateHome.tsx: Trang chủ Nextsoft (Tone Vàng - Đỏ - Đen), chứa Landing page, Form liên hệ, Tin tức.
+
+📂 products/ (Web Sản phẩm)
+
+📄 IdentalHome.tsx: Landing page cho sản phẩm Nha khoa (Tone Xanh Teal).
+
+📂 admin/ (Đã quy hoạch folder, chưa có file).
+
+📝 Ghi chú nhanh cho AI (Context Loading)
+Khi bạn bắt đầu phiên làm việc mới, cấu trúc này giúp AI hiểu ngay:
+
+Style: Tailwind CSS (Custom Theme).
+
+Routing: React Router DOM.
+
+State: Context API (Custom Hook useAppContext).
+
+Backend: Supabase (Client-side).
