@@ -1,7 +1,32 @@
+/* 1. Nạp Font trực tiếp tại đây (Chắc chắn tải được) */
+@import url('https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: #f8fafc;
+/* 2. ÉP CỨNG FONT CHO TOÀN BỘ WEB */
+@layer base {
+  /* Ép toàn bộ thẻ HTML, Body và cả App Root */
+  html, body, #root {
+    font-family: 'Be Vietnam Pro', sans-serif !important;
+  }
+
+  /* Ép riêng các thẻ tiêu đề (đôi khi nó lì lợm dùng font riêng) */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Be Vietnam Pro', sans-serif !important;
+  }
+  
+  /* Ép các thẻ input, button (form hay bị lỗi font mặc định) */
+  input, button, textarea, select {
+    font-family: 'Be Vietnam Pro', sans-serif !important;
+  }
+}
+
+/* 3. Ép nội dung bài viết (Plugin Typography) */
+.prose {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
+}
+.prose strong, .prose b, .prose h1, .prose h2, .prose h3 {
+  font-family: 'Be Vietnam Pro', sans-serif !important;
 }

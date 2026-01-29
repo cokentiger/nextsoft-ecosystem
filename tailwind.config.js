@@ -8,7 +8,6 @@ export default {
     extend: {
       colors: {
         // Theme Công ty mẹ (Nextsoft): Vàng - Đỏ - Đen
-        // Đã mở rộng dải màu để làm background và border đẹp hơn
         corporate: {
           50: '#fffbeb',  // Nền rất nhạt
           100: '#fef3c7', // Nền nhạt
@@ -32,13 +31,17 @@ export default {
           900: '#134e4a',
         }
       },
+      // 👇 CẤU HÌNH FONT CHUẨN (Thêm fallback để không bao giờ bị lỗi font có chân)
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['"Be Vietnam Pro"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
       },
       boxShadow: {
-        'glow': '0 0 20px rgba(234, 179, 8, 0.5)', // Hiệu ứng phát sáng cho nút
+        'glow': '0 0 20px rgba(234, 179, 8, 0.5)', // Hiệu ứng phát sáng
       }
     },
   },
-  plugins: [],
+  // 👇 QUAN TRỌNG: Phải kích hoạt plugin này thì nội dung Blog mới đẹp được
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }

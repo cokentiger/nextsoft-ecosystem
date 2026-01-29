@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { supabase } from '../../supabaseClient';
+import { Footer } from './Footer';
 
 interface NavItem {
   label: string;
@@ -8,61 +10,68 @@ interface NavItem {
 
 export const MainLayout = ({ children }: { children: React.ReactNode }) => {
   const [menuItems, setMenuItems] = useState<NavItem[]>([]);
+  const location = useLocation();
 
-  // Lấy Menu từ Database ngay khi mở web
   useEffect(() => {
     const fetchNav = async () => {
-      const { data } = await supabase
-        .from('navigation_items')
-        .select('*')
-        .eq('scope', 'primary_menu') // Chỉ lấy menu chính
-        .eq('is_visible', true)
-        .order('order_index');
-      
-      if (data) setMenuItems(data);
+      try {
+        const { data } = await supabase
+          .from('navigation_items')
+          .select('*')
+          .eq('scope', 'primary_menu')
+          .eq('is_visible', true)
+          .order('order_index');
+        if (data) setMenuItems(data);
+      } catch (err) { console.error(err); }
     };
     fetchNav();
   }, []);
 
+  const isActive = (href: string) => {
+    if (href === '/' && location.pathname === '/') return true;
+    if (href !== '/' && location.pathname.startsWith(href)) return true;
+    return false;
+  };
+
   return (
-    <div className="min-h-screen bg-white flex flex-col">
-      {/* --- HEADER (CỐ ĐỊNH) --- */}
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-md z-50 border-b border-slate-100 h-16">
+    <div className="min-h-screen bg-white flex flex-col font-sans text-slate-900">
+      {/* HEADER: Dùng sticky để luôn bám trên cùng */}
+      <header className="sticky top-0 left-0 right-0 bg-white/95 backdrop-blur-sm z-50 border-b border-slate-100 h-16 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 h-full flex items-center justify-between">
-          {/* Logo */}
-          <div className="font-black text-xl text-corporate-900">NEXTSOFT</div>
+          
+          {/* 1. LOGO */}
+          <a href="/" className="font-black text-2xl tracking-tighter text-slate-900 flex items-center select-none">
+             NEXTSOFT<span className="text-corporate-600 text-3xl leading-none">.</span>
+          </a>
 
-          {/* Menu Động lấy từ DB */}
-          <nav className="hidden md:flex gap-8">
-            {menuItems.map((item, idx) => (
-              <a 
-                key={idx} 
-                href={item.href} 
-                className="text-sm font-medium text-slate-600 hover:text-corporate-600 transition-colors"
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
+          {/* 2. MENU & LOGIN (Gom nhóm sang phải) */}
+          <div className="flex items-center gap-8">
+            <nav className="hidden md:flex gap-8">
+              {menuItems.map((item, idx) => (
+                <a 
+                  key={idx} 
+                  href={item.href} 
+                  className={`text-sm font-bold transition-colors duration-200
+                    ${isActive(item.href) ? 'text-corporate-600' : 'text-slate-500 hover:text-slate-900'}
+                  `}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
 
-          {/* Nút Login giả lập */}
-          <button className="bg-slate-900 text-white px-4 py-2 rounded-lg text-sm font-bold">
-            Đăng nhập
-          </button>
+            <button className="bg-slate-900 text-white px-5 py-2 rounded-lg text-sm font-bold hover:bg-slate-800 transition-transform active:scale-95">
+              Đăng nhập
+            </button>
+          </div>
         </div>
       </header>
 
-      {/* --- PHẦN THÂN TRANG (THAY ĐỔI THEO TỪNG TRANG) --- */}
-      <main className="flex-grow pt-16"> 
+      <main className="flex-grow"> 
         {children}
       </main>
 
-      {/* --- FOOTER (CỐ ĐỊNH) --- */}
-      <footer className="bg-slate-50 border-t border-slate-200 py-12 mt-auto">
-        <div className="max-w-7xl mx-auto px-4 text-center text-slate-400 text-sm">
-          © 2026 Nextsoft Corporation. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
