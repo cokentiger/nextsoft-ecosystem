@@ -6,6 +6,9 @@ import CorporateHome from './pages/corporate/CorporateHome';
 import IdentalHome from './pages/products/IdentalHome';
 import BlogDetail from './pages/corporate/BlogDetail'; 
 import BlogListing from './pages/corporate/BlogListing';
+import CustomersPage from './pages/corporate/CustomersPage';
+import ResourcesPage from './pages/corporate/ResourcesPage';
+import { CustomerDetail } from './pages/corporate/CustomerDetail';
 
 function App() {
   return (
@@ -13,6 +16,14 @@ function App() {
       <Routes>
         {/* Web Mẹ: nextsoft.vn */}
         <Route path="/" element={<CorporateHome />} />
+
+      
+        <Route path="/resources" element={<ResourcesPage />} />
+
+
+        <Route path="/customers" element={<CustomersPage />} />
+        {/* 👇 Thêm dòng này */}
+        <Route path="/customers/:slug" element={<CustomerDetail />} />
 
         {/* 👇 2. Thêm Route cho trang danh sách */}
         <Route path="/blog" element={<BlogListing />} />
